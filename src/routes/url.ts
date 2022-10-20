@@ -6,10 +6,11 @@ type Private = {
 }
 
 type Public = {
-    AUTH_NOT_FOUND?: string
-    PUBLIC_DASHBOARD?: string
-    PUBLIC_PARTY?: string
-    PUBLIC_CREATE_PARTY?: string
+    PAGE_NOT_FOUND?: string
+    SPOTIFY_HOMEPAGE?: string
+    SPOTIFY_DASHBOARD_PAGE?: string
+    SPOTIFY_SEARCH_PAGE?: string
+    SPOTIFY_LIBRARY_PAGE?: string
 };
 
 export const PRIVATE_ROUTE:Private = {
@@ -19,8 +20,9 @@ export const PRIVATE_ROUTE:Private = {
 };
 
 export const PUBLIC_ROUTE: Public = {
-    AUTH_NOT_FOUND: '*',
-    PUBLIC_DASHBOARD: '/admin/dashboard',
-    PUBLIC_PARTY: '/admin/party',
-    PUBLIC_CREATE_PARTY: '/admin/create-party'
+    PAGE_NOT_FOUND: '*',
+    SPOTIFY_HOMEPAGE: '/spotify/home',
+    SPOTIFY_DASHBOARD_PAGE: '/spotify/dashboard',
+    SPOTIFY_SEARCH_PAGE: '/spotify/search',
+    SPOTIFY_LIBRARY_PAGE: 'spotify/library'
 };

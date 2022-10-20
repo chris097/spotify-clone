@@ -11,6 +11,9 @@ module.exports = {
       },
       width: {
         sidebarwidth: "232px"
+      },
+      fontFamily: {
+        sourcesan: "Source Sans Pro, sans-serif"
       }
     },
   },
