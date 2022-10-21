@@ -14,7 +14,7 @@ const InternalLayout:React.FC<Props> = ({ Component, ...otherProps }) => {
                 <Sidebar />
                 <Header />
             </div>
-            <main className="md:ml-64 md:mr-4 mx-6 md:mx-0">
+            <main className="md:ml-64 md:mr-10 mx-6 md:mx-0">
                 <Component {...otherProps} />
             </main>
         </div>
