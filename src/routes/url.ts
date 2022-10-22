@@ -24,5 +24,5 @@ export const PUBLIC_ROUTE: Public = {
     SPOTIFY_HOMEPAGE: '/spotify/home',
     SPOTIFY_DASHBOARD_PAGE: '/spotify/dashboard',
     SPOTIFY_SEARCH_PAGE: '/spotify/search',
-    SPOTIFY_LIBRARY_PAGE: 'spotify/library'
+    SPOTIFY_LIBRARY_PAGE: '/spotify/library'
 };

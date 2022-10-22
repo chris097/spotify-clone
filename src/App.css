@@ -36,9 +36,6 @@
     transform: rotate(360deg);
   }
 } */
-.spotify-logo--text{
-      height: 40px;
-    max-width: 131px;
-    width: 100%;
-    color: #fff;
+img {
+  image-rendering: pixelated;
 }
