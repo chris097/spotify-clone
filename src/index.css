@@ -23,7 +23,7 @@ img {
   image-rendering: pixelated;
 }
 .active > svg {
-  fill: #b3b3b3;
+  fill: #fff;
 }
 
 /* code {

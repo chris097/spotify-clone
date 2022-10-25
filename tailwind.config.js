@@ -12,6 +12,8 @@ module.exports = {
         secondarygray: "rgba(0,0,0,.7)",
         nextgray: "#535353",
         cardgray: "#181818",
+        hovergray: "#242424",
+        primarygreen: "#1ed760",
       },
       width: {
         sidebarwidth: "232px"
