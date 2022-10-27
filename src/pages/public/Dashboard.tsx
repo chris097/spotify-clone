@@ -1,6 +1,6 @@
 import React from 'react'
 import Card from '../../components/Cards'
-import { artists, recents } from '../../data'
+import { artists, dailys, recents } from '../../data'
 
 const Dashboard = () => {
   return (
@@ -32,6 +32,22 @@ const Dashboard = () => {
             img={artist.url}
             title={artist.title}
             description={artist.description}
+            className="h-[200px] w-full"
+          />
+        ))}
+      </div>
+    </div>
+    <div className='w-full h-full font-medium text-sm mt-10 font-sourcesan'>
+      <div className='flex justify-between items-center'>
+        <div className='font-sourcesan text-2xl text-white'>Good morning</div>
+        <button type='button' className='text-[15px] font-medium hover:border-b-2 hover:border-primarygray'>SEE ALL</button>
+      </div>
+      <div className='flex items-center space-x-4'>
+        {dailys.map(daily => (
+          <Card
+            img={daily.url}
+            title={daily.title}
+            description={daily.description}
             className="h-[200px] w-full"
           />
         ))}
