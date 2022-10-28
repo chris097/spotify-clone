@@ -1,5 +1,6 @@
 import React from 'react'
 import Card from '../../components/Cards'
+import Footer from '../../components/Footer'
 import { artists, dailys, recents } from '../../data'
 
 const Dashboard = () => {
@@ -51,7 +52,8 @@ const Dashboard = () => {
             className="h-[200px] w-full"
           />
         ))}
-      </div>
+        </div>
+        <Footer />
     </div>
     </>
   )
