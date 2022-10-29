@@ -1,9 +1,10 @@
 import React from 'react'
+import AudioComponent from '../Audio'
 
 const Footer = () => {
   return (
     <div>
-      <div className='flex justify-between mt-24 mb-10'>
+      <div className='flex justify-between mt-24 mb-14'>
         <div className='flex space-x-28'>
           <div>
             <div className='text-lg text-white'>Company</div>
@@ -44,7 +45,7 @@ const Footer = () => {
         </div>
       </div>
       <div className='border-basergba border-[.5px]'></div>
-      <div className='my-10 flex justify-between text-[15px]'>
+      <div className='mt-10 mb-44 flex justify-between text-[15px]'>
         <div>
           <ul className='flex space-x-9'>
             <li>Legal</li>
@@ -56,6 +57,7 @@ const Footer = () => {
         </div>
         <div>© 2022 Spotify AB</div>
       </div>
+      <AudioComponent />
     </div>
   )
 }

@@ -15,6 +15,7 @@ module.exports = {
         nextgray: "#535353",
         cardgray: "#181818",
         hovergray: "#242424",
+        bordergray: "#282828",
         primarygreen: "#1ed760",
       },
       width: {
