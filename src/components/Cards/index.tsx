@@ -23,11 +23,11 @@ const Card: React.FC<Props> = (props) => {
                     </div>
                 </div>
         </div>
-        <div className='w-full p-4 h-[310px] rounded-md font-sourcesan'>
-          <div className='w-full h-[195px]'>
+        <div className='w-full p-4 h-[300px] rounded-md font-sourcesan'>
+          <div className='w-full h-[185px]'>
             <img className={props.className} src={props.img} />
           </div>
-          <div className='font-medium text-[18px] text-white mt-3'>{ props.title}</div>
+          <div className='font-medium text-[18px] text-white mt-7'>{ props.title}</div>
           <div className='text-[15px] mt-1'>{props.description}</div>
           </div>
         </div>

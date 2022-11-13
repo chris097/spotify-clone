@@ -17,7 +17,7 @@ const Dashboard = () => {
               img={recent.url}
               title={recent.title}
               description={recent.description}
-              className={`h-[200px] w-full ${(recent.id === 1 || recent.id === 2) && 'rounded-full'}`}
+              className={`h-[190px] w-full ${(recent.id === 1 || recent.id === 2) ? 'rounded-full' : 'rounded-md'}`}
           />
         ))}
       </div>
@@ -33,7 +33,7 @@ const Dashboard = () => {
             img={artist.url}
             title={artist.title}
             description={artist.description}
-            className="h-[200px] w-full"
+            className="h-[190px] w-full rounded-md"
           />
         ))}
       </div>
@@ -49,7 +49,7 @@ const Dashboard = () => {
             img={daily.url}
             title={daily.title}
             description={daily.description}
-            className="h-[200px] w-full"
+            className="h-[190px] w-full rounded-md"
           />
         ))}
         </div>

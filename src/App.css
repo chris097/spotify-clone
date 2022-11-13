@@ -37,5 +37,11 @@
   }
 } */
 img {
-  image-rendering: pixelated;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  object-fit: fill;
+}
+.progressBar{
+  appearance: none;
 }
