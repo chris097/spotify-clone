@@ -14,6 +14,7 @@ const Dashboard = () => {
       <div className='flex items-center space-x-4'>
           {recents.map(recent => (
             <Card
+              key={recent.id}
               img={recent.url}
               title={recent.title}
               description={recent.description}
@@ -30,6 +31,7 @@ const Dashboard = () => {
       <div className='flex items-center space-x-4'>
         {artists.map(artist => (
           <Card
+            key={artist.id}
             img={artist.url}
             title={artist.title}
             description={artist.description}
@@ -46,6 +48,7 @@ const Dashboard = () => {
       <div className='flex items-center space-x-4'>
         {dailys.map(daily => (
           <Card
+            key={daily.id}
             img={daily.url}
             title={daily.title}
             description={daily.description}
