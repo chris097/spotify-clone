@@ -1,12 +1,40 @@
-import React, { useState } from 'react';
-import {MdOutlinePause} from 'react-icons/md'
+import { useState, useRef, useEffect } from 'react';
+import { MdOutlinePause } from 'react-icons/md';
 
 const AudioComponent = () => {
+// state
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [duration, setDuration] = useState<any | null>(0);
+  const [currentTime, setCurrentTime] = useState<any | null>("0");
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  // reference
+  const audioPlayer = useRef<HTMLAudioElement>(null) // reference our audio component
+  const progressBar = useRef<HTMLInputElement>(null);
+
+    //useEffect
+  useEffect(() => {
+    const seconds = Math.floor(audioPlayer?.current?.duration || duration);
+    setDuration(seconds);
+    // progressBar.current.max = seconds;
+  }, [audioPlayer?.current?.onloadedmetadata, audioPlayer?.current?.readyState]);
+
+  const calculateTime = (secs:any) => {
+    const minutes = Math.floor(secs / 60);
+    const returnedMinute = minutes < 10 ? `0${minutes}` : minutes;
+    const seconds = Math.floor(secs % 60);
+    const returedSeconds = seconds < 10 ? `0${seconds}` : seconds
+
+    return `${returnedMinute} : ${returedSeconds}`
+  }
 
   const handleAudioPlay = () => {
-    setIsPlaying(!isPlaying)
+    const prevValue = isPlaying;
+    setIsPlaying(!prevValue)
+    if (!prevValue) {
+      audioPlayer.current?.play()
+    } else {
+      audioPlayer.current?.pause()
+    }
   };
 
   return (
@@ -21,21 +49,20 @@ const AudioComponent = () => {
               </div>
               <div className='flex space-x-4'>
                 <span><svg fill='#b3b3b3' role="img" height="16" width="16" viewBox="0 0 16 16"><path d="M1.69 2A4.582 4.582 0 018 2.023 4.583 4.583 0 0111.88.817h.002a4.618 4.618 0 013.782 3.65v.003a4.543 4.543 0 01-1.011 3.84L9.35 14.629a1.765 1.765 0 01-2.093.464 1.762 1.762 0 01-.605-.463L1.348 8.309A4.582 4.582 0 011.689 2zm3.158.252A3.082 3.082 0 002.49 7.337l.005.005L7.8 13.664a.264.264 0 00.311.069.262.262 0 00.09-.069l5.312-6.33a3.043 3.043 0 00.68-2.573 3.118 3.118 0 00-2.551-2.463 3.079 3.079 0 00-2.612.816l-.007.007a1.501 1.501 0 01-2.045 0l-.009-.008a3.082 3.082 0 00-2.121-.861z"></path></svg></span>
-                <span><svg fill='#b3b3b3' width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill-rule="evenodd"><path d="M1 3v9h14V3H1zm0-1h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" fill-rule="nonzero"></path><path d="M10 8h4v3h-4z"></path></g></svg></span>
+                <span><svg fill='#b3b3b3' width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fillRule="evenodd"><path d="M1 3v9h14V3H1zm0-1h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" fillRule="nonzero"></path><path d="M10 8h4v3h-4z"></path></g></svg></span>
               </div>
             </div>
           </div>
           <div className='flex justif-center flex-col items-center'>
           {/* audio */}
-          <audio src='' preload='metadata'></audio>
+          <audio ref={audioPlayer} src='https://www.computerhope.com/jargon/m/example.mp3' preload='metadata'></audio>
         <div className='flex space-x-8 items-center'>
             <span><svg fill='#727272' height="16" width="16" viewBox="0 0 16 16"><path d="M13.151.922a.75.75 0 10-1.06 1.06L13.109 3H11.16a3.75 3.75 0 00-2.873 1.34l-6.173 7.356A2.25 2.25 0 01.39 12.5H0V14h.391a3.75 3.75 0 002.873-1.34l6.173-7.356a2.25 2.25 0 011.724-.804h1.947l-1.017 1.018a.75.75 0 001.06 1.06L15.98 3.75 13.15.922zM.391 3.5H0V2h.391c1.109 0 2.16.49 2.873 1.34L4.89 5.277l-.979 1.167-1.796-2.14A2.25 2.25 0 00.39 3.5z"></path><path d="M7.5 10.723l.98-1.167.957 1.14a2.25 2.25 0 001.724.804h1.947l-1.017-1.018a.75.75 0 111.06-1.06l2.829 2.828-2.829 2.828a.75.75 0 11-1.06-1.06L13.109 13H11.16a3.75 3.75 0 01-2.873-1.34l-.787-.938z"></path></svg></span>
             <span><svg fill='#a7a7a7' role="img" height="16" width="16" viewBox="0 0 16 16"><path d="M3.3 1a.7.7 0 01.7.7v5.15l9.95-5.744a.7.7 0 011.05.606v12.575a.7.7 0 01-1.05.607L4 9.149V14.3a.7.7 0 01-.7.7H1.7a.7.7 0 01-.7-.7V1.7a.7.7 0 01.7-.7h1.6z"></path></svg></span>
             {/* play & pause */}
             <button type='button' onClick={handleAudioPlay} className='w-8 h-8 rounded-full bg-white flex justify-center items-center'>
-              {isPlaying ?
+              {isPlaying ? <MdOutlinePause color='#000' size="16px" />:
                 <svg role="img" height="16" width="16" viewBox="0 0 16 16"><path d="M3 1.713a.7.7 0 011.05-.607l10.89 6.288a.7.7 0 010 1.212L4.05 14.894A.7.7 0 013 14.288V1.713z"></path></svg>
-                : <MdOutlinePause color='#000' size="16px" />
               }
             </button>
             <span><svg fill='#a7a7a7' role="img" height="16" width="16" viewBox="0 0 16 16"><path d="M12.7 1a.7.7 0 00-.7.7v5.15L2.05 1.107A.7.7 0 001 1.712v12.575a.7.7 0 001.05.607L12 9.149V14.3a.7.7 0 00.7.7h1.6a.7.7 0 00.7-.7V1.7a.7.7 0 00-.7-.7h-1.6z"></path></svg></span>
@@ -43,11 +70,11 @@ const AudioComponent = () => {
           </div>
           {/* progress bar */}
         <div className='flex space-x-4 items-center mt-2'>
-              <div>0:00</div> 
+            <div>{ calculateTime(currentTime)}</div> 
             <div>
-              <input type="range" className='w-96 h-1 rounded progressBar' />
+              <input type="range" className='progressBar' defaultValue='0' ref={progressBar} />
             </div>  
-              <div>2:04</div>
+            <div>{!duration ? "00 : 00" : calculateTime(duration)}</div>
         </div>
     </div>
         <div className='flex space-x-4 items-center'>

@@ -42,6 +42,105 @@ img {
   background-size: cover;
   object-fit: fill;
 }
+input[type=range] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */ /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
 .progressBar{
+  width: 450px;
+  position: relative;
+  outline: none;
+  height: 4px;
+  border-radius: 5px;
   appearance: none;
+  background-color: #727272;
+}
+/* progress bar - safari */
+.progressBar::-webkit-slider-runnable-track{
+  position: relative;
+  outline: none;
+  appearance: none;
+   height: 4px;
+  border-radius: 5px;
+  background-color: #727272;
+};
+/* progress bar - firefox */
+.progressBar::-moz-range-track{
+  position: relative;
+  /* width: 450px; */
+  outline: none;
+  appearance: none;
+   height: 4px;
+  border-radius: 5px;
+  background-color: #727272;
+};
+.progressBar::-moz-focus-outer{
+  border: 0;
+}
+/* progress bar safari & chrome */
+
+.progressBar::before{
+  content: '';
+  width: 450px;
+  height: 4px;
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  cursor: pointer;
+};
+.progressBar::-moz-range-progress{
+   background-color: #fff;
+   width: 450px;
+   border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+   height: 4px;
+};
+
+.progressBar::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+/* knobby safari & chrome */
+.progressBar:hover::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  height: 17px;
+  width: 17px;
+  border-radius: 50%;
+  border: none;
+  background: green;
+  position: relative;
+  margin: -6px 0 0 0;
+  z-index: 3;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.progressBar:active::-webkit-slider-thumb{
+  transform: scale(1.2);
+  background-color: green;
+};
+/* firefox */
+.progressBar::-moz-range-thumb{
+   height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  border: transparent;
+  background-color: green;
+  position: relative;
+  z-index: 3;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.progressBar:active::-moz-range-thumb{
+  transform: scale(1.2);
+  background-color: green;
 }
