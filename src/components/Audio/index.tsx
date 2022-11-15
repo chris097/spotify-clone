@@ -13,9 +13,10 @@ const AudioComponent = () => {
 
     //useEffect
   useEffect(() => {
-    const seconds = Math.floor(audioPlayer?.current?.duration || duration);
+    const seconds = Math.floor(audioPlayer.current?.duration || duration);
     setDuration(seconds);
-    // progressBar.current.max = seconds;
+    let progess:any|number = progressBar?.current?.max;
+    progess = seconds;
   }, [audioPlayer?.current?.onloadedmetadata, audioPlayer?.current?.readyState]);
 
   const calculateTime = (secs:any) => {
@@ -36,6 +37,15 @@ const AudioComponent = () => {
       audioPlayer.current?.pause()
     }
   };
+
+  const changeHandler = () => {
+    let audioCurrentTime: any = audioPlayer.current?.currentTime;
+    let progressVal:any|number = progressBar.current;
+    audioCurrentTime = progressVal?.value;
+    progressVal?.style.setProperty('0', `${audioCurrentTime / duration * 100}%`);
+    setCurrentTime(audioCurrentTime);
+    console.log('currentTime', `${progressVal?.value / duration * 100}%`)
+  }
 
   return (
     <div className='fixed bottom-0 px-3 left-0 z-50 bg-cardgray border-t border-bordergray w-full h-[90px]'>
@@ -70,9 +80,9 @@ const AudioComponent = () => {
           </div>
           {/* progress bar */}
         <div className='flex space-x-4 items-center mt-2'>
-            <div>{ calculateTime(currentTime)}</div> 
+            <div>{calculateTime(currentTime)}</div> 
             <div>
-              <input type="range" className='progressBar' defaultValue='0' ref={progressBar} />
+              <input type="range" className='progressBar' defaultValue="0" ref={progressBar} onChange={changeHandler} />
             </div>  
             <div>{!duration ? "00 : 00" : calculateTime(duration)}</div>
         </div>

@@ -7,8 +7,7 @@ import { PUBLIC_ROUTE } from '../../routes/url'
 
 const Sidebar = () => {
 
-  const data = navs?.map(nav => nav)
-  console.log(data)
+  // const data = navs?.map(nav => nav)
   return (
     <div className='w-sidebarwidth h-screen fixed bg-black px-6 pt-5 font-medium text-[16px]'>
       <div>
