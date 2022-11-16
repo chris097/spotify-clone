@@ -5,7 +5,7 @@ const AudioComponent = () => {
 // state
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [duration, setDuration] = useState<any | null>(0);
-  const [currentTime, setCurrentTime] = useState<any | null>("0");
+  const [currentTime, setCurrentTime] = useState<any | null>(0);
 
   // reference
   const audioPlayer = useRef<HTMLAudioElement>(null) // reference our audio component
