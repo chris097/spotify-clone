@@ -2,50 +2,84 @@ import { useState, useRef, useEffect } from 'react';
 import { MdOutlinePause } from 'react-icons/md';
 
 const AudioComponent = () => {
-// state
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [duration, setDuration] = useState<any | null>(0);
-  const [currentTime, setCurrentTime] = useState<any | null>(0);
+  // state
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
 
   // reference
-  const audioPlayer = useRef<HTMLAudioElement>(null) // reference our audio component
-  const progressBar = useRef<HTMLInputElement>(null);
+  const audioPlayer = useRef();   // reference our audio component
+  const progressBar = useRef();   // reference our progress bar
+  const animationRef = useRef();  // reference the animation
 
     //useEffect
-  useEffect(() => {
-    const seconds = Math.floor(audioPlayer.current?.duration || duration);
+  // useEffect(() => {
+  //   const seconds = Math.floor(audioPlayer.current?.duration || duration);
+  //   setDuration(seconds);
+  //   let progess:any|number = progressBar?.current?.max;
+  //   progess = seconds;
+  // }, [audioPlayer?.current?.onloadedmetadata, audioPlayer?.current?.readyState]);
+   useEffect(() => {
+    const seconds = Math.floor(audioPlayer.current.duration);
     setDuration(seconds);
-    let progess:any|number = progressBar?.current?.max;
-    progess = seconds;
-  }, [audioPlayer?.current?.onloadedmetadata, audioPlayer?.current?.readyState]);
-
-  const calculateTime = (secs:any) => {
+    progressBar.current.max = seconds;
+   }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
+  
+  const calculateTime = (secs) => {
     const minutes = Math.floor(secs / 60);
-    const returnedMinute = minutes < 10 ? `0${minutes}` : minutes;
+    const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
     const seconds = Math.floor(secs % 60);
-    const returedSeconds = seconds < 10 ? `0${seconds}` : seconds
-
-    return `${returnedMinute} : ${returedSeconds}`
+    const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+    return `${returnedMinutes}:${returnedSeconds}`;
   }
 
-  const handleAudioPlay = () => {
+  // const togglePlayPause = () => {
+  //   const prevValue = isPlaying;
+  //   setIsPlaying(!prevValue)
+  //   if (!prevValue) {
+  //     audioPlayer.current?.play()
+  //   } else {
+  //     audioPlayer.current?.pause()
+  //   }
+  // };
+
+  const togglePlayPause = () => {
     const prevValue = isPlaying;
-    setIsPlaying(!prevValue)
+    setIsPlaying(!prevValue);
     if (!prevValue) {
-      audioPlayer.current?.play()
+      audioPlayer.current.play();
+      animationRef.current = requestAnimationFrame(whilePlaying)
     } else {
-      audioPlayer.current?.pause()
+      audioPlayer.current.pause();
+      cancelAnimationFrame(animationRef.current);
     }
-  };
-
-  const changeHandler = () => {
-    let audioCurrentTime: any = audioPlayer.current?.currentTime;
-    let progressVal:any|number = progressBar.current;
-    audioCurrentTime = progressVal?.value;
-    progressVal?.style.setProperty('0', `${audioCurrentTime / duration * 100}%`);
-    setCurrentTime(audioCurrentTime);
-    console.log('currentTime', `${progressVal?.value / duration * 100}%`)
   }
+
+  const whilePlaying = () => {
+    progressBar.current.value = audioPlayer.current.currentTime;
+    changePlayerCurrentTime();
+    animationRef.current = requestAnimationFrame(whilePlaying);
+  }
+
+  const changeRange = () => {
+    audioPlayer.current.currentTime = progressBar.current.value;
+    changePlayerCurrentTime();
+  }
+
+  const changePlayerCurrentTime = () => {
+    progressBar.current.style.setProperty('0', `${progressBar.current.value / duration * 100}%`)
+    setCurrentTime(progressBar.current.value);
+  }
+
+  // const changeHandler = () => {
+  //   let audioCurrentTime: any = audioPlayer.current?.currentTime;
+  //   let progressVal:any|number = progressBar.current;
+  //   audioCurrentTime = progressVal?.value;
+  //   progressVal?.style.setProperty('0', `${audioCurrentTime / duration * 100}%`);
+  //   setCurrentTime(audioCurrentTime);
+  //   console.log('currentTime', `${progressVal?.value / duration * 100}%`)
+  // }
+
 
   return (
     <div className='fixed bottom-0 px-3 left-0 z-50 bg-cardgray border-t border-bordergray w-full h-[90px]'>
@@ -65,12 +99,12 @@ const AudioComponent = () => {
           </div>
           <div className='flex justif-center flex-col items-center'>
           {/* audio */}
-          <audio ref={audioPlayer} src='https://www.computerhope.com/jargon/m/example.mp3' preload='metadata'></audio>
+          <audio ref={audioPlayer} src="https://cdn.simplecast.com/audio/cae8b0eb-d9a9-480d-a652-0defcbe047f4/episodes/af52a99b-88c0-4638-b120-d46e142d06d3/audio/500344fb-2e2b-48af-be86-af6ac341a6da/default_tc.mp3" preload='metadata'></audio>
         <div className='flex space-x-8 items-center'>
             <span><svg fill='#727272' height="16" width="16" viewBox="0 0 16 16"><path d="M13.151.922a.75.75 0 10-1.06 1.06L13.109 3H11.16a3.75 3.75 0 00-2.873 1.34l-6.173 7.356A2.25 2.25 0 01.39 12.5H0V14h.391a3.75 3.75 0 002.873-1.34l6.173-7.356a2.25 2.25 0 011.724-.804h1.947l-1.017 1.018a.75.75 0 001.06 1.06L15.98 3.75 13.15.922zM.391 3.5H0V2h.391c1.109 0 2.16.49 2.873 1.34L4.89 5.277l-.979 1.167-1.796-2.14A2.25 2.25 0 00.39 3.5z"></path><path d="M7.5 10.723l.98-1.167.957 1.14a2.25 2.25 0 001.724.804h1.947l-1.017-1.018a.75.75 0 111.06-1.06l2.829 2.828-2.829 2.828a.75.75 0 11-1.06-1.06L13.109 13H11.16a3.75 3.75 0 01-2.873-1.34l-.787-.938z"></path></svg></span>
             <span><svg fill='#a7a7a7' role="img" height="16" width="16" viewBox="0 0 16 16"><path d="M3.3 1a.7.7 0 01.7.7v5.15l9.95-5.744a.7.7 0 011.05.606v12.575a.7.7 0 01-1.05.607L4 9.149V14.3a.7.7 0 01-.7.7H1.7a.7.7 0 01-.7-.7V1.7a.7.7 0 01.7-.7h1.6z"></path></svg></span>
             {/* play & pause */}
-            <button type='button' onClick={handleAudioPlay} className='w-8 h-8 rounded-full bg-white flex justify-center items-center'>
+            <button type='button' onClick={togglePlayPause} className='w-8 h-8 rounded-full bg-white flex justify-center items-center'>
               {isPlaying ? <MdOutlinePause color='#000' size="16px" />:
                 <svg role="img" height="16" width="16" viewBox="0 0 16 16"><path d="M3 1.713a.7.7 0 011.05-.607l10.89 6.288a.7.7 0 010 1.212L4.05 14.894A.7.7 0 013 14.288V1.713z"></path></svg>
               }
@@ -82,7 +116,7 @@ const AudioComponent = () => {
         <div className='flex space-x-4 items-center mt-2'>
             <div>{calculateTime(currentTime)}</div> 
             <div>
-              <input type="range" className='progressBar' defaultValue="0" ref={progressBar} onChange={changeHandler} />
+              <input type="range" className='progressBar' defaultValue="0" ref={progressBar} onChange={changeRange} />
             </div>  
             <div>{!duration ? "00 : 00" : calculateTime(duration)}</div>
         </div>
