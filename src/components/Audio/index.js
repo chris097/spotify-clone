@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { MdOutlinePause } from 'react-icons/md';
-import asaka from '../../public/audio/Burna_Boy_-_Cloak_Dagger_ft_J_Hus_042jam.com.mp3'
+import asaka from '../../public/audio/Burna_Boy_-_Cloak_Dagger_ft_J_Hus_042jam.com.mp3';
 
 const AudioComponent = () => {
   // state
@@ -13,13 +13,6 @@ const AudioComponent = () => {
   const progressBar = useRef();   // reference our progress bar
   const animationRef = useRef();  // reference the animation
 
-    //useEffect
-  // useEffect(() => {
-  //   const seconds = Math.floor(audioPlayer.current?.duration || duration);
-  //   setDuration(seconds);
-  //   let progess:any|number = progressBar?.current?.max;
-  //   progess = seconds;
-  // }, [audioPlayer?.current?.onloadedmetadata, audioPlayer?.current?.readyState]);
    useEffect(() => {
     const seconds = Math.floor(audioPlayer.current.duration);
     setDuration(seconds);
@@ -32,19 +25,9 @@ const AudioComponent = () => {
     const seconds = Math.floor(secs % 60);
     const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
     return `${returnedMinutes}:${returnedSeconds}`;
-  }
+  };
 
-  // const togglePlayPause = () => {
-  //   const prevValue = isPlaying;
-  //   setIsPlaying(!prevValue)
-  //   if (!prevValue) {
-  //     audioPlayer.current?.play()
-  //   } else {
-  //     audioPlayer.current?.pause()
-  //   }
-  // };
-
-  const togglePlayPause = () => {
+    const togglePlayPause = () => {
     const prevValue = isPlaying;
     setIsPlaying(!prevValue);
     if (!prevValue) {
@@ -71,16 +54,6 @@ const AudioComponent = () => {
     progressBar.current.style.setProperty('0', `${progressBar.current.value / duration * 100}%`)
     setCurrentTime(progressBar.current.value);
   }
-
-  // const changeHandler = () => {
-  //   let audioCurrentTime: any = audioPlayer.current?.currentTime;
-  //   let progressVal:any|number = progressBar.current;
-  //   audioCurrentTime = progressVal?.value;
-  //   progressVal?.style.setProperty('0', `${audioCurrentTime / duration * 100}%`);
-  //   setCurrentTime(audioCurrentTime);
-  //   console.log('currentTime', `${progressVal?.value / duration * 100}%`)
-  // }
-
 
   return (
     <div className='fixed bottom-0 px-3 left-0 z-50 bg-cardgray border-t border-bordergray w-full h-[90px]'>
