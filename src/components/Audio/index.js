@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { MdOutlinePause } from 'react-icons/md';
 import asaka from '../../public/audio/Burna_Boy_-_Cloak_Dagger_ft_J_Hus_042jam.com.mp3';
 
@@ -7,6 +8,9 @@ const AudioComponent = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+
+  const playState = useSelector(state => state.play);
+console.log(playState)
 
   // reference
   const audioPlayer = useRef();   // reference our audio component
