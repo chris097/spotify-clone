@@ -1,9 +1,12 @@
-import React from 'react'
-import Card from '../../components/Cards'
-import Footer from '../../components/Footer'
+import Card from '../../components/Cards';
+import Footer from '../../components/Footer';
+import {  useGetTopChartsQuery } from '../../redux/services/ShazamCore';
 import { artists, dailys, recents } from '../../data'
 
 const Dashboard = () => {
+
+  const { data } = useGetTopChartsQuery([]);
+
   return (
     <>
     <div className='w-full h-full font-medium text-sm mt-4 font-sourcesan'>
