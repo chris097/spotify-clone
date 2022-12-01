@@ -1,83 +1,64 @@
 import { useState, useRef, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MdOutlinePause } from 'react-icons/md';
-import asaka from '../../public/audio/Burna_Boy_-_Cloak_Dagger_ft_J_Hus_042jam.com.mp3';
+// import asaka from '../../public/audio/Burna_Boy_-_Cloak_Dagger_ft_J_Hus_042jam.com.mp3';
+import { playPause } from '../../redux/feature/audio/audioSlice';
+import Tracks from '../MusicPlayer/Tracks';
 
 const AudioComponent = () => {
   // state
-  const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
 
-  const playState = useSelector(state => state.play);
-console.log(playState)
+  const { isPlaying } = useSelector((state:any)=> state.audio);
+  const  dispatch = useDispatch()
 
   // reference
-  const audioPlayer = useRef();   // reference our audio component
+  const audioPlayer = useRef<HTMLAudioElement>(null);   // reference our audio component
   const progressBar = useRef();   // reference our progress bar
   const animationRef = useRef();  // reference the animation
 
-   useEffect(() => {
-    const seconds = Math.floor(audioPlayer.current.duration);
-    setDuration(seconds);
-    progressBar.current.max = seconds;
-   }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
+  //  useEffect(() => {
+  //   const seconds = Math.floor(audioPlayer.current.duration);
+  //   setDuration(seconds);
+  //   progressBar.current.max = seconds;
+  //  }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
   
-  const calculateTime = (secs) => {
-    const minutes = Math.floor(secs / 60);
-    const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-    const seconds = Math.floor(secs % 60);
-    const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-    return `${returnedMinutes}:${returnedSeconds}`;
-  };
+  // const calculateTime = (secs) => {
+  //   const minutes = Math.floor(secs / 60);
+  //   const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+  //   const seconds = Math.floor(secs % 60);
+  //   const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+  //   return `${returnedMinutes}:${returnedSeconds}`;
+  // };
 
     const togglePlayPause = () => {
     const prevValue = isPlaying;
-    setIsPlaying(!prevValue);
-    if (!prevValue) {
+      dispatch(playPause(!prevValue));
+      if (!prevValue) {
+        dispatch(playPause(true))
+      } else {
+        dispatch(playPause(false))
+      }
+    }
+  
+  if (audioPlayer.current) {
+    if (isPlaying) {
       audioPlayer.current.play();
-      animationRef.current = requestAnimationFrame(whilePlaying)
+      // animationRef.current = requestAnimationFrame(whilePlaying)
     } else {
       audioPlayer.current.pause();
-      cancelAnimationFrame(animationRef.current);
+      // cancelAnimationFrame(animationRef.current);
     }
-  }
-
-  const whilePlaying = () => {
-    progressBar.current.value = audioPlayer.current.currentTime;
-    changePlayerCurrentTime();
-    animationRef.current = requestAnimationFrame(whilePlaying);
-  }
-
-  const changeRange = () => {
-    audioPlayer.current.currentTime = progressBar.current.value;
-    changePlayerCurrentTime();
-  }
-
-  const changePlayerCurrentTime = () => {
-    progressBar.current.style.setProperty('0', `${progressBar.current.value / duration * 100}%`)
-    setCurrentTime(progressBar.current.value);
   }
 
   return (
     <div className='fixed bottom-0 px-3 left-0 z-50 bg-cardgray border-t border-bordergray w-full h-[90px]'>
         <div className='flex justify-between items-center h-full'>
-          <div className='flex space-x-3 items-center'>
-            <img width='56px' height='56px' src='https://i.scdn.co/image/ab67616d000048518a6ac9a40bdbb616a1a518f4' alt='audio image' />
-            <div className='flex space-x-8 items-center'>
-              <div>
-                <div className='text-white text-[16px]'>Dada</div>
-                <div>Young John</div>
-              </div>
-              <div className='flex space-x-4'>
-                <span><svg fill='#b3b3b3' role="img" height="16" width="16" viewBox="0 0 16 16"><path d="M1.69 2A4.582 4.582 0 018 2.023 4.583 4.583 0 0111.88.817h.002a4.618 4.618 0 013.782 3.65v.003a4.543 4.543 0 01-1.011 3.84L9.35 14.629a1.765 1.765 0 01-2.093.464 1.762 1.762 0 01-.605-.463L1.348 8.309A4.582 4.582 0 011.689 2zm3.158.252A3.082 3.082 0 002.49 7.337l.005.005L7.8 13.664a.264.264 0 00.311.069.262.262 0 00.09-.069l5.312-6.33a3.043 3.043 0 00.68-2.573 3.118 3.118 0 00-2.551-2.463 3.079 3.079 0 00-2.612.816l-.007.007a1.501 1.501 0 01-2.045 0l-.009-.008a3.082 3.082 0 00-2.121-.861z"></path></svg></span>
-                <span><svg fill='#b3b3b3' width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fillRule="evenodd"><path d="M1 3v9h14V3H1zm0-1h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" fillRule="nonzero"></path><path d="M10 8h4v3h-4z"></path></g></svg></span>
-              </div>
-            </div>
-          </div>
+          <Tracks />
           <div className='flex justif-center flex-col items-center'>
           {/* audio */}
-          <audio ref={audioPlayer} src={asaka} preload='metadata'></audio>
+          <audio ref={audioPlayer} src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/bc/5c/5c/bc5c5ca1-0aa1-457d-65ce-f0f56f8a8245/mzaf_12809811648741532519.plus.aac.ep.m4a" />
         <div className='flex space-x-8 items-center'>
             <span><svg fill='#727272' height="16" width="16" viewBox="0 0 16 16"><path d="M13.151.922a.75.75 0 10-1.06 1.06L13.109 3H11.16a3.75 3.75 0 00-2.873 1.34l-6.173 7.356A2.25 2.25 0 01.39 12.5H0V14h.391a3.75 3.75 0 002.873-1.34l6.173-7.356a2.25 2.25 0 011.724-.804h1.947l-1.017 1.018a.75.75 0 001.06 1.06L15.98 3.75 13.15.922zM.391 3.5H0V2h.391c1.109 0 2.16.49 2.873 1.34L4.89 5.277l-.979 1.167-1.796-2.14A2.25 2.25 0 00.39 3.5z"></path><path d="M7.5 10.723l.98-1.167.957 1.14a2.25 2.25 0 001.724.804h1.947l-1.017-1.018a.75.75 0 111.06-1.06l2.829 2.828-2.829 2.828a.75.75 0 11-1.06-1.06L13.109 13H11.16a3.75 3.75 0 01-2.873-1.34l-.787-.938z"></path></svg></span>
             <span><svg fill='#a7a7a7' role="img" height="16" width="16" viewBox="0 0 16 16"><path d="M3.3 1a.7.7 0 01.7.7v5.15l9.95-5.744a.7.7 0 011.05.606v12.575a.7.7 0 01-1.05.607L4 9.149V14.3a.7.7 0 01-.7.7H1.7a.7.7 0 01-.7-.7V1.7a.7.7 0 01.7-.7h1.6z"></path></svg></span>
@@ -92,11 +73,11 @@ console.log(playState)
           </div>
           {/* progress bar */}
         <div className='flex space-x-4 items-center mt-2'>
-            <div>{calculateTime(currentTime)}</div> 
+            {/* <div>{calculateTime(currentTime)}</div>  */}
             <div>
-              <input type="range" className='progressBar' defaultValue="0" ref={progressBar} onChange={changeRange} />
+              {/* <input type="range" className='progressBar' defaultValue="0" ref={progressBar} onChange={changeRange} /> */}
             </div>  
-            <div>{!duration ? "00 : 00" : calculateTime(duration)}</div>
+            {/* <div>{!duration ? "00 : 00" : calculateTime(duration)}</div> */}
         </div>
     </div>
         <div className='flex space-x-4 items-center'>
