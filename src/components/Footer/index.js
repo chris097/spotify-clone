@@ -1,5 +1,6 @@
 import React from 'react'
 import AudioComponent from '../Audio'
+// import MusicPlayer from '../MusicPlayer'
 
 const Footer = () => {
   return (
@@ -58,6 +59,7 @@ const Footer = () => {
         <div>© 2022 Spotify AB</div>
       </div>
       <AudioComponent />
+      {/* <MusicPlayer /> */}
     </div>
   )
 }
