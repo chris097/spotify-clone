@@ -18,11 +18,20 @@ module.exports = {
         bordergray: "#282828",
         primarygreen: "#1ed760",
       },
+      animation: {
+        slideup: 'slideup 1s ease-in-out',
+      },
       width: {
         sidebarwidth: "232px"
       },
       fontFamily: {
         sourcesan: "Source Sans Pro, sans-serif"
+      },
+      keyframes: {
+        slideup: {
+          from: { opacity: 0, transform: 'translateY(25%)' },
+          to: { opacity: 1, transform: 'none' },
+        },
       }
     },
   },

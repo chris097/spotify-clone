@@ -1,5 +1,4 @@
-import React from 'react'
-import AudioComponent from '../Audio'
+import React from 'react';
 // import MusicPlayer from '../MusicPlayer'
 
 const Footer = () => {
@@ -58,7 +57,7 @@ const Footer = () => {
         </div>
         <div>© 2022 Spotify AB</div>
       </div>
-      <AudioComponent />
+
       {/* <MusicPlayer /> */}
     </div>
   )
