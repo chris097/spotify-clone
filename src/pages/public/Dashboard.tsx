@@ -2,6 +2,7 @@ import Card from '../../components/Cards';
 import Footer from '../../components/Footer';
 import {  useGetTopChartsQuery } from '../../redux/services/ShazamCore';
 import { artists, dailys, recents } from '../../data'
+import AudioPlayer from '../../components/Audio';
 
 const Dashboard = () => {
 
@@ -26,8 +27,8 @@ console.log(data?.map((song:any) => song))
           ))}
       </div>
     </div>
-    
-        <Footer />
+      <Footer />
+      <AudioPlayer />
     </>
   )
 }

@@ -1,36 +1,32 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdOutlinePause } from 'react-icons/md';
+import { BsFillVolumeUpFill, BsVolumeDownFill, BsFillVolumeMuteFill } from 'react-icons/bs';
 // import asaka from '../../public/audio/Burna_Boy_-_Cloak_Dagger_ft_J_Hus_042jam.com.mp3';
 import { playPause } from '../../redux/feature/audio/audioSlice';
-import Tracks from '../MusicPlayer/Tracks';
+import Tracks from './Tracks';
+import ProgressBar from './ProgressBar';
 
-const AudioComponent = () => {
+type Audio = {
+  repeat?: boolean
+  onEnded?: () => {}
+  onLoadedData?: () => {}
+  onTimeUpdate?: () => {}
+}
+
+const AudioPlayer:React.FC<Audio> = () => {
   // state
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [seekTime, setSeekTime] = useState(0);
+  const [volume, setVolume] = useState(0.3)
 
-  const { isPlaying } = useSelector((state:any)=> state.audio);
-  const  dispatch = useDispatch()
+  const { isPlaying, activeSong } = useSelector((state:any)=> state.audio);
+  const dispatch = useDispatch();
+
 
   // reference
-  const audioPlayer = useRef<HTMLAudioElement>(null);   // reference our audio component
-  const progressBar = useRef();   // reference our progress bar
-  const animationRef = useRef();  // reference the animation
-
-  //  useEffect(() => {
-  //   const seconds = Math.floor(audioPlayer.current.duration);
-  //   setDuration(seconds);
-  //   progressBar.current.max = seconds;
-  //  }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
-  
-  // const calculateTime = (secs) => {
-  //   const minutes = Math.floor(secs / 60);
-  //   const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-  //   const seconds = Math.floor(secs % 60);
-  //   const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-  //   return `${returnedMinutes}:${returnedSeconds}`;
-  // };
+  const audioPlayer = useRef<HTMLAudioElement>(null);  // reference our audio component
 
     const togglePlayPause = () => {
     const prevValue = isPlaying;
@@ -45,12 +41,22 @@ const AudioComponent = () => {
   if (audioPlayer.current) {
     if (isPlaying) {
       audioPlayer.current.play();
-      // animationRef.current = requestAnimationFrame(whilePlaying)
     } else {
       audioPlayer.current.pause();
-      // cancelAnimationFrame(animationRef.current);
     }
-  }
+  };
+
+  let vol = audioPlayer.current?.volume;
+
+  useEffect(() => {
+    vol = volume
+    console.log(vol)
+  }, [volume]);
+  // updates audio element only on seekTime change (and not on each rerender):
+  // useEffect(() => {
+  //   let audio = audioPlayer.current?.currentTime
+  //   audio = seekTime
+  // }, [seekTime]);
 
   return (
     <div className='fixed bottom-0 px-3 left-0 z-50 bg-cardgray border-t border-bordergray w-full h-[90px]'>
@@ -58,7 +64,14 @@ const AudioComponent = () => {
           <Tracks />
           <div className='flex justif-center flex-col items-center'>
           {/* audio */}
-          <audio ref={audioPlayer} src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/bc/5c/5c/bc5c5ca1-0aa1-457d-65ce-f0f56f8a8245/mzaf_12809811648741532519.plus.aac.ep.m4a" />
+          <audio
+            onTimeUpdate={(event:any) => setCurrentTime(event.target.currentTime)}
+            onLoadedData={(event:any) => setDuration(event.target.duration)}
+            // onEnded={onEnded}
+            // loop={repeat}
+            ref={audioPlayer}
+            src={activeSong?.hub?.actions[1]?.uri}
+          />
         <div className='flex space-x-8 items-center'>
             <span><svg fill='#727272' height="16" width="16" viewBox="0 0 16 16"><path d="M13.151.922a.75.75 0 10-1.06 1.06L13.109 3H11.16a3.75 3.75 0 00-2.873 1.34l-6.173 7.356A2.25 2.25 0 01.39 12.5H0V14h.391a3.75 3.75 0 002.873-1.34l6.173-7.356a2.25 2.25 0 011.724-.804h1.947l-1.017 1.018a.75.75 0 001.06 1.06L15.98 3.75 13.15.922zM.391 3.5H0V2h.391c1.109 0 2.16.49 2.873 1.34L4.89 5.277l-.979 1.167-1.796-2.14A2.25 2.25 0 00.39 3.5z"></path><path d="M7.5 10.723l.98-1.167.957 1.14a2.25 2.25 0 001.724.804h1.947l-1.017-1.018a.75.75 0 111.06-1.06l2.829 2.828-2.829 2.828a.75.75 0 11-1.06-1.06L13.109 13H11.16a3.75 3.75 0 01-2.873-1.34l-.787-.938z"></path></svg></span>
             <span><svg fill='#a7a7a7' role="img" height="16" width="16" viewBox="0 0 16 16"><path d="M3.3 1a.7.7 0 01.7.7v5.15l9.95-5.744a.7.7 0 011.05.606v12.575a.7.7 0 01-1.05.607L4 9.149V14.3a.7.7 0 01-.7.7H1.7a.7.7 0 01-.7-.7V1.7a.7.7 0 01.7-.7h1.6z"></path></svg></span>
@@ -72,13 +85,12 @@ const AudioComponent = () => {
             <span><svg role="img" fill='#727272' height="16" width="16" viewBox="0 0 16 16"><path d="M0 4.75A3.75 3.75 0 013.75 1h8.5A3.75 3.75 0 0116 4.75v5a3.75 3.75 0 01-3.75 3.75H9.81l1.018 1.018a.75.75 0 11-1.06 1.06L6.939 12.75l2.829-2.828a.75.75 0 111.06 1.06L9.811 12h2.439a2.25 2.25 0 002.25-2.25v-5a2.25 2.25 0 00-2.25-2.25h-8.5A2.25 2.25 0 001.5 4.75v5A2.25 2.25 0 003.75 12H5v1.5H3.75A3.75 3.75 0 010 9.75v-5z"></path></svg></span>
           </div>
           {/* progress bar */}
-        <div className='flex space-x-4 items-center mt-2'>
-            {/* <div>{calculateTime(currentTime)}</div>  */}
-            <div>
-              {/* <input type="range" className='progressBar' defaultValue="0" ref={progressBar} onChange={changeRange} /> */}
-            </div>  
-            {/* <div>{!duration ? "00 : 00" : calculateTime(duration)}</div> */}
-        </div>
+          <ProgressBar
+            min="0"
+            value={currentTime}
+            max={duration}
+            onInput={(event:any) => setSeekTime(event.target.value)}
+          />
     </div>
         <div className='flex space-x-4 items-center'>
           <span>
@@ -95,7 +107,18 @@ const AudioComponent = () => {
           </span>
           {/* volume */}
           <div>
-            <input type='range' className='h-1 rounded' />
+            {volume <= 1 && volume > 0.5 && <BsFillVolumeUpFill size={25} color="#FFF" onClick={() => setVolume(0)} />}
+            {volume <= 0.5 && volume > 0 && <BsVolumeDownFill size={25} color="#FFF" onClick={() => setVolume(0)} />}
+            {volume === 0 && <BsFillVolumeMuteFill size={25} color="#FFF" onClick={() => setVolume(1)} />}
+            <input
+              value={volume}
+              min="0"
+              step="any"
+              max="1"
+              type='range'
+              className='h-1 rounded'
+              onChange={(event:any) => setVolume(event.target.value)}
+            />
           </div>
           </div>
         </div>
@@ -103,4 +126,4 @@ const AudioComponent = () => {
   )
 }
 
-export default AudioComponent
+export default AudioPlayer;

@@ -12,29 +12,32 @@ type Props = {
 
 const Card: React.FC<Props> = ({song, data, i, className}) => {
 
-  const { isPlaying } = useSelector((state: any) => state.audio);
+  const { isPlaying, activeSong } = useSelector((state: any) => state.audio);
   const dispatch = useDispatch();
+
+  console.log(i)
 
  const togglePlayPause = () => {
     const prevValue = isPlaying;
       dispatch(playPause(!prevValue));
       if (!prevValue) {
         dispatch(playPause(true))
-      } else {
-        dispatch(playPause(false))
-      }
-    }
+        dispatch(setActiveSong({song, data, i}))
+   } else{
+     dispatch(playPause(false))
+   }
+    };
   
   return (
     <div className='w-[217px] mt-6'>
-      <div className="overflow-hidden aspect-video bg-cardgray h-[310px] w-full hover:bg-hovergray cursor-pointer rounded-xl relative group">
-          <div className="rounded-xl z-50 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out cursor-pointer absolute to-transparent bg-gradient-to-t inset-x-0 -bottom-2 text-white flex items-end">
+      <div className={`overflow-hidden aspect-video bg-cardgray h-[310px] w-full ${(isPlaying && activeSong?.title === song?.title) && "bg-hovergray"} hover:bg-hovergray animate-slideup cursor-pointer rounded-xl relative group`}>
+        <div className={`rounded-xl z-50 ${(isPlaying && activeSong?.title === song?.title) ? "" : "opacity-0 group-hover:opacity-100"} transition duration-300 ease-in-out cursor-pointer absolute to-transparent bg-gradient-to-t inset-x-0 -bottom-2 text-white flex items-end`}>
             <div className='w-full'>
               <div className="flex justify-end w-full space-y-3 text-xl group-hover:translate-y-0 translate-y-4 pb-10 transform transition duration-300 ease-in-out">    
               {/* playpause */}
               <div className='w-full flex justify-end'>
-                <button onClick={togglePlayPause} type="button" className='bg-primarygreen flex justify-center w-14 h-14 -mt-32 mr-6 absolute rounded-full items-center'>
-                  {isPlaying ?
+                <button onClick={togglePlayPause} type="button" className='bg-primarygreen flex justify-center w-14 h-14 -mt-32 mr-6 rounded-full items-center'>
+                  {isPlaying && activeSong?.title === song?.title ?
                     (
                       <svg height="24" width="24" viewBox="0 0 24 24"><path d="M5.7 3a.7.7 0 00-.7.7v16.6a.7.7 0 00.7.7h2.6a.7.7 0 00.7-.7V3.7a.7.7 0 00-.7-.7H5.7zm10 0a.7.7 0 00-.7.7v16.6a.7.7 0 00.7.7h2.6a.7.7 0 00.7-.7V3.7a.7.7 0 00-.7-.7h-2.6z"></path></svg>
                     ) :
