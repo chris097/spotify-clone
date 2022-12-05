@@ -19,7 +19,6 @@ const Card: React.FC<Props> = ({song, data, i, className}) => {
 
  const togglePlayPause = () => {
     const prevValue = isPlaying;
-      dispatch(playPause(!prevValue));
       if (!prevValue) {
         dispatch(playPause(true))
         dispatch(setActiveSong({song, data, i}))

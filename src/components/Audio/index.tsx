@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MdOutlinePause } from 'react-icons/md';
 import { BsFillVolumeUpFill, BsVolumeDownFill, BsFillVolumeMuteFill } from 'react-icons/bs';
 // import asaka from '../../public/audio/Burna_Boy_-_Cloak_Dagger_ft_J_Hus_042jam.com.mp3';
-import { playPause } from '../../redux/feature/audio/audioSlice';
+import { playPause, setActiveSong } from '../../redux/feature/audio/audioSlice';
 import Tracks from './Tracks';
 import ProgressBar from './ProgressBar';
 
@@ -12,9 +12,12 @@ type Audio = {
   onEnded?: () => {}
   onLoadedData?: () => {}
   onTimeUpdate?: () => {}
+  song?: any
+  data?: []
+  i?: number
 }
 
-const AudioPlayer:React.FC<Audio> = () => {
+const AudioPlayer:React.FC<Audio> = ({song, data, i}) => {
   // state
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -33,10 +36,12 @@ const AudioPlayer:React.FC<Audio> = () => {
       dispatch(playPause(!prevValue));
       if (!prevValue) {
         dispatch(playPause(true))
+        dispatch(setActiveSong({song, data, i}))
       } else {
         dispatch(playPause(false))
       }
     }
+  
   
   if (audioPlayer.current) {
     if (isPlaying) {
@@ -46,22 +51,12 @@ const AudioPlayer:React.FC<Audio> = () => {
     }
   };
 
-  let vol = audioPlayer.current?.volume;
-
-  useEffect(() => {
-    vol = volume
-    console.log(vol)
-  }, [volume]);
-  // updates audio element only on seekTime change (and not on each rerender):
-  // useEffect(() => {
-  //   let audio = audioPlayer.current?.currentTime
-  //   audio = seekTime
-  // }, [seekTime]);
-
   return (
     <div className='fixed bottom-0 px-3 left-0 z-50 bg-cardgray border-t border-bordergray w-full h-[90px]'>
         <div className='flex justify-between items-center h-full'>
-          <Tracks />
+        <Tracks
+          song={song}
+        />
           <div className='flex justif-center flex-col items-center'>
           {/* audio */}
           <audio
