@@ -20,14 +20,19 @@ console.log(data?.map((song:any) => song))
         <button type='button' className='text-[15px] font-medium hover:border-b-2 hover:border-primarygray'>SEE ALL</button>
       </div>
         <div className='flex items-center space-x-4'>
-                {data?.slice(0, 5).map((song: any, i: number) => (
+                {data?.slice(6, 11).map((song: any, i: number) => (
             <>
             <Card
               song={song}
-              key={song?.key}
+              key={i}
               data={data}
               i={i}
-            />
+                    />
+                    <AudioPlayer
+                      song={song}
+                      data={data}
+                      i={i}
+                    />
             </>
           ))}
       </div>
@@ -37,12 +42,12 @@ console.log(data?.map((song:any) => song))
         <div className='font-sourcesan text-2xl text-white'>Trending Now</div>
         <button type='button' className='text-[15px] font-medium hover:border-b-2 hover:border-primarygray'>SEE ALL</button>
       </div>
-        <div className='flex items-center space-x-4'>
+        {/* <div className='flex items-center space-x-4'>
                 {data?.slice(5, 10).map((song: any, i: number) => (
             <>
             <Card
               song={song}
-              key={song?.key}
+              key={i}
               data={data}
               i={i}
             />
@@ -53,7 +58,7 @@ console.log(data?.map((song:any) => song))
                     />
             </>
           ))}
-      </div>
+      </div> */}
     </div>
       <Footer />
           </>}
