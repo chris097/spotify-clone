@@ -22,7 +22,7 @@ const ProgressBar:React.FC<Bar> = ({ value, min, max, onInput }) => {
         min={min}
         max={max}
         onInput={onInput}
-        className="md:block w-24 md:w-56 lg:w-96 h-1 mx-1 2xl:mx-6 rounded-lg"
+        className="md:block w-24 md:w-56 lg:w-96 mx-1 2xl:mx-6 rounded-lg progressBar"
       />
       <p className="text-white">{max === 0 ? '0:00' : getTime(max)}</p>
     </div>
