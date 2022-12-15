@@ -16,14 +16,14 @@ const ProgressBar:React.FC<Bar> = ({ value, min, max, onInput }) => {
     <div className='flex items-center mt-1'>
       <p className="text-white">{value === 0 ? '0:00' : getTime(value)}</p>
       <input
-        style={{backgroundSize: `10%`}}
+        style={{backgroundSize: `${(Number(value) / Number(max)) * 100 || 0}%`}}
         type="range"
         step="any"
         value={value}
         min={min}
         max={max}
         onInput={onInput}
-        className="md:block w-24 md:w-56 lg:w-96 mx-1 2xl:mx-6 rounded-lg"
+        className="md:block md:w-56 lg:w-96 mx-1 2xl:mx-6 rounded-lg"
       />
       <p className="text-white">{max === 0 ? '0:00' : getTime(max)}</p>
     </div>
