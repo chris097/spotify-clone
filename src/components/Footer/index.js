@@ -4,7 +4,7 @@ import React from 'react';
 const Footer = () => {
   return (
     <div>
-      <div className='flex justify-between mt-24 mb-14'>
+      <div className='flex justify-between mt-24 mb-14 md:ml-64 md:mr-10 mx-6 md:mx-0'>
         <div className='flex space-x-28'>
           <div>
             <div className='text-lg text-white'>Company</div>

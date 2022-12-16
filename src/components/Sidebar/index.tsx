@@ -9,7 +9,7 @@ const Sidebar = () => {
 
   // const data = navs?.map(nav => nav)
   return (
-    <div className='w-sidebarwidth h-screen fixed bg-black px-6 pt-5 font-medium text-[16px]'>
+    <div className='w-sidebarwidth h-screen fixed z-50 bg-black px-6 pt-5 font-medium text-[16px]'>
       <div>
         <SpotifyLogo />
         {/* {
