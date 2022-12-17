@@ -12,10 +12,28 @@ console.log(data?.map((song:any) => song))
  
   return (
     <div className='mt-20'>
-      <div className='bg-gradient-to-b from-[#8f09126c] w-full md:pl-64 md:pr-10 pd:mx-0 h-60 pt-5'>
+      <div className='bg-gradient-to-b from-[#82091160] w-full md:pl-64 md:pr-10 pd:mx-0 h-60'>
         <div className=''>
           <div className='text-white text-3xl'>Good Morning</div>
-          <div className=''>Do something here</div>
+          <div className='flex gap-8'>
+            <div className='border border-[#362525] flex justify-between items-center rounded-lg shadow pr-3 h-[60px] bg-[#362525] w-full'>
+            <div className='flex gap-3'>
+                <div className='bg-white w-16 rounded-tl-lg rounded-bl-lg h-[60px]'>img</div>
+                <div className='flex items-center h-[60px]'>name</div>
+              </div>
+              <div>play</div>
+          </div>
+          <div className='border border-white h-[60px] w-full'>
+              <div>
+                <div>img</div>
+                <div>name</div>
+              </div>
+              <div>play</div>
+          </div>
+          <div className='border border-white h-[60px] w-full'>
+            do something here...
+          </div>
+          </div>
         </div>
       </div>
    {
