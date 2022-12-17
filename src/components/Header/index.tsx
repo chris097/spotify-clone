@@ -3,7 +3,7 @@ import React from 'react'
 const Header = () => {
   return (
     <>
-    <div className='bg-[#8f09126c] fixed top-0 left-0 z-40 w-full pl-64 h-20 flex justify-between items-center font-sourcesan pr-8'>
+    <div className='bg-[#82091160] fixed top-0 left-0 z-40 w-full pl-64 h-20 flex justify-between items-center font-sourcesan pr-8'>
       <div className='flex space-x-5'>
         <button className='bg-secondarygray w-9 h-9 items-center flex justify-center rounded-full'>
           <svg role="img" height="24" width="24" fill='#b3b3b3' viewBox="0 0 24 24"><path d="M15.957 2.793a1 1 0 010 1.414L8.164 12l7.793 7.793a1 1 0 11-1.414 1.414L5.336 12l9.207-9.207a1 1 0 011.414 0z"></path></svg>
