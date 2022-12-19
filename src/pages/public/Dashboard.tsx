@@ -15,37 +15,46 @@ console.log(data?.map((song:any) => song))
       <div className='bg-gradient-to-b from-[#82091160] w-full md:pl-64 md:pr-10 pd:mx-0 h-60'>
         <div className=''>
           <div className='text-white text-3xl'>Good Morning</div>
-          <div className='flex gap-8'>
-            <div className='border border-[#362525] flex justify-between items-center rounded-lg shadow pr-3 h-[60px] bg-[#362525] w-full'>
+          <div className='flex gap-4 mt-3'>
+            {data?.slice(0, 3).map((song:any) => (
+              <div className='border border-[#362525] flex justify-between items-center rounded shadow pr-3 h-[70px] bg-[#362525] w-full'>
             <div className='flex gap-3'>
-                <div className='bg-white w-16 rounded-tl-lg rounded-bl-lg h-[60px]'>img</div>
-                <div className='flex items-center h-[60px]'>name</div>
+                  <img
+                    src={song?.images?.coverart}
+                    className='bg-white w-16 rounded-tl rounded-bl h-[70px]'
+                  />
+                  <div className='flex items-center h-[70px]'>{song?.title}</div>
               </div>
               <div>play</div>
           </div>
-          <div className='border border-white h-[60px] w-full'>
-              <div>
-                <div>img</div>
-                <div>name</div>
+            ))}
+          </div>
+          <div className='flex gap-4 mt-4'>
+            {data?.slice(0, 3).map((song:any) => (
+              <div className='border border-[#362525] flex justify-between items-center rounded shadow pr-3 h-[70px] bg-[#362525] w-full'>
+            <div className='flex gap-3'>
+                  <img
+                    src={song?.images?.coverart}
+                    className='bg-white w-16 rounded-tl rounded-bl h-[70px]'
+                  />
+                  <div className='flex items-center h-[70px]'>{song?.title}</div>
               </div>
               <div>play</div>
           </div>
-          <div className='border border-white h-[60px] w-full'>
-            do something here...
-          </div>
+            ))}
           </div>
         </div>
       </div>
    {
     isFetching ? <div>Loading...</div> :
           <>
-    <div className='w-full h-full font-medium text-sm mt-6 font-sourcesan md:pl-64 md:pr-10 pd:mx-0'>
+    <div className='w-full h-full font-medium text-sm font-sourcesan md:pl-64 md:pr-10 pd:mx-0'>
       <div className='flex justify-between items-center'>
         <div className='font-sourcesan text-2xl text-white'>Recently Played</div>
         <div className='text-white'>See All</div>
       </div>
         <div className='flex items-center space-x-4'>
-                {data?.slice(6, 11).map((song: any, i: number) => (
+                {data?.slice(0, 5).map((song: any, i: number) => (
             <>
             <Card
               song={song}
