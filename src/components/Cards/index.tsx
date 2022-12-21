@@ -26,7 +26,7 @@ const Card: React.FC<Props> = ({song, data, i, className}) => {
     };
   
   return (
-    <div className='w-[217px] mt-6'>
+    <div className='w-[217px] mt-4'>
       <div className={`overflow-hidden aspect-video bg-cardgray h-[310px] w-full ${(isPlaying && activeSong?.title === song?.title) && "bg-hovergray"} hover:bg-hovergray animate-slideup cursor-pointer rounded-xl relative group`}>
         <div className={`rounded-xl z-30 ${(isPlaying && activeSong?.title === song?.title) ? "" : "opacity-0 group-hover:opacity-100"} transition duration-300 ease-in-out cursor-pointer absolute to-transparent bg-gradient-to-t inset-x-0 -bottom-2 text-white flex items-end`}>
             <div className='w-full'>
@@ -49,7 +49,7 @@ const Card: React.FC<Props> = ({song, data, i, className}) => {
         </div>
         <div className='w-full p-4 rounded-md font-sourcesan'>
           <div className='w-full'>
-            <img className={className} src={song?.images?.coverart} />
+            {song?.images?.coverart ? <img className={className} src={song?.images?.coverart} /> : <div className='h-[180px]'></div>}
           </div>
             <Link to={`/songs/${song?.key}`}>
               <p className='font-medium text-[18px] text-white mt-7 truncate'>

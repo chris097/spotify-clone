@@ -1,4 +1,5 @@
 import React from 'react';
+import AudioPlayer from '../Audio';
 // import MusicPlayer from '../MusicPlayer'
 
 const Footer = () => {
@@ -59,6 +60,7 @@ const Footer = () => {
       </div>
 
       {/* <MusicPlayer /> */}
+       
     </div>
   )
 }

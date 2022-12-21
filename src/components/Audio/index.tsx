@@ -24,32 +24,11 @@ const AudioPlayer:React.FC<Audio> = ({song, data, i}) => {
   const [seekTime, setSeekTime] = useState(0);
   const [volume, setVolume] = useState(0.3)
 
-  const { isPlaying, activeSong } = useSelector((state:any)=> state.audio);
-  const dispatch = useDispatch();
+  const { isPlaying, activeSong } = useSelector((state: any) => state.audio);
 
 
   // reference
-  const audioPlayer = useRef<HTMLAudioElement>(null);  // reference our audio component
 
-    const togglePlayPause = () => {
-    const prevValue = isPlaying;
-      dispatch(playPause(!prevValue));
-      if (!prevValue) {
-        dispatch(playPause(true))
-        dispatch(setActiveSong({song, data, i}))
-      } else {
-        dispatch(playPause(false))
-      }
-    }
-  
-  
-  if (audioPlayer.current) {
-    if (isPlaying) {
-      audioPlayer.current.play();
-    } else {
-      audioPlayer.current.pause();
-    }
-  };
 
   return (
     <div className='fixed bottom-0 px-3 left-0 z-50 bg-cardgray border-t border-bordergray w-full h-[90px]'>
@@ -64,14 +43,13 @@ const AudioPlayer:React.FC<Audio> = ({song, data, i}) => {
             onLoadedData={(event:any) => setDuration(event.target.duration)}
             // onEnded={onEnded}
             // loop={repeat}
-            ref={audioPlayer}
             src={activeSong?.hub?.actions[1]?.uri}
           />
         <div className='flex space-x-8 items-center'>
             <span><svg fill='#727272' height="16" width="16" viewBox="0 0 16 16"><path d="M13.151.922a.75.75 0 10-1.06 1.06L13.109 3H11.16a3.75 3.75 0 00-2.873 1.34l-6.173 7.356A2.25 2.25 0 01.39 12.5H0V14h.391a3.75 3.75 0 002.873-1.34l6.173-7.356a2.25 2.25 0 011.724-.804h1.947l-1.017 1.018a.75.75 0 001.06 1.06L15.98 3.75 13.15.922zM.391 3.5H0V2h.391c1.109 0 2.16.49 2.873 1.34L4.89 5.277l-.979 1.167-1.796-2.14A2.25 2.25 0 00.39 3.5z"></path><path d="M7.5 10.723l.98-1.167.957 1.14a2.25 2.25 0 001.724.804h1.947l-1.017-1.018a.75.75 0 111.06-1.06l2.829 2.828-2.829 2.828a.75.75 0 11-1.06-1.06L13.109 13H11.16a3.75 3.75 0 01-2.873-1.34l-.787-.938z"></path></svg></span>
             <span><svg fill='#a7a7a7' role="img" height="16" width="16" viewBox="0 0 16 16"><path d="M3.3 1a.7.7 0 01.7.7v5.15l9.95-5.744a.7.7 0 011.05.606v12.575a.7.7 0 01-1.05.607L4 9.149V14.3a.7.7 0 01-.7.7H1.7a.7.7 0 01-.7-.7V1.7a.7.7 0 01.7-.7h1.6z"></path></svg></span>
             {/* play & pause */}
-            <button type='button' onClick={togglePlayPause} className='w-8 h-8 rounded-full bg-white flex justify-center items-center'>
+            <button type='button' className='w-8 h-8 rounded-full bg-white flex justify-center items-center'>
               {isPlaying ? <MdOutlinePause color='#000' size="16px" />:
                 <svg role="img" height="16" width="16" viewBox="0 0 16 16"><path d="M3 1.713a.7.7 0 011.05-.607l10.89 6.288a.7.7 0 010 1.212L4.05 14.894A.7.7 0 013 14.288V1.713z"></path></svg>
               }
@@ -97,12 +75,14 @@ const AudioPlayer:React.FC<Audio> = ({song, data, i}) => {
           <span>
             <svg role="presentation" fill='#727272' height="16" width="16" viewBox="0 0 16 16"><path d="M6 2.75C6 1.784 6.784 1 7.75 1h6.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0114.25 15h-6.5A1.75 1.75 0 016 13.25V2.75zm1.75-.25a.25.25 0 00-.25.25v10.5c0 .138.112.25.25.25h6.5a.25.25 0 00.25-.25V2.75a.25.25 0 00-.25-.25h-6.5zm-6 0a.25.25 0 00-.25.25v6.5c0 .138.112.25.25.25H4V11H1.75A1.75 1.75 0 010 9.25v-6.5C0 1.784.784 1 1.75 1H4v1.5H1.75zM4 15H2v-1.5h2V15z"></path><path d="M13 10a2 2 0 11-4 0 2 2 0 014 0zm-1-5a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
           </span>
-          <span>
+          {/* <span>
             <svg role="presentation" fill='#727272' height="16" width="16" aria-label="Volume high" id="volume-icon" viewBox="0 0 16 16"><path d="M9.741.85a.75.75 0 01.375.65v13a.75.75 0 01-1.125.65l-6.925-4a3.642 3.642 0 01-1.33-4.967 3.639 3.639 0 011.33-1.332l6.925-4a.75.75 0 01.75 0zm-6.924 5.3a2.139 2.139 0 000 3.7l5.8 3.35V2.8l-5.8 3.35zm8.683 4.29V5.56a2.75 2.75 0 010 4.88z"></path><path d="M11.5 13.614a5.752 5.752 0 000-11.228v1.55a4.252 4.252 0 010 8.127v1.55z"></path></svg>
-          </span>
+          </span> */}
           {/* volume */}
-          <div>
-            {volume <= 1 && volume > 0.5 && <BsFillVolumeUpFill size={25} color="#FFF" onClick={() => setVolume(0)} />}
+          <div className='flex items-center'>
+            {volume <= 1 && volume > 0.5 &&
+               <svg role="presentation" onClick={() => setVolume(0)} fill='#727272' height="16" width="16" className='mr-2' aria-label="Volume high" id="volume-icon" viewBox="0 0 16 16"><path d="M9.741.85a.75.75 0 01.375.65v13a.75.75 0 01-1.125.65l-6.925-4a3.642 3.642 0 01-1.33-4.967 3.639 3.639 0 011.33-1.332l6.925-4a.75.75 0 01.75 0zm-6.924 5.3a2.139 2.139 0 000 3.7l5.8 3.35V2.8l-5.8 3.35zm8.683 4.29V5.56a2.75 2.75 0 010 4.88z"></path><path d="M11.5 13.614a5.752 5.752 0 000-11.228v1.55a4.252 4.252 0 010 8.127v1.55z"></path></svg>
+              }
             {volume <= 0.5 && volume > 0 && <BsVolumeDownFill size={25} color="#FFF" onClick={() => setVolume(0)} />}
             {volume === 0 && <BsFillVolumeMuteFill size={25} color="#FFF" onClick={() => setVolume(1)} />}
             <input
