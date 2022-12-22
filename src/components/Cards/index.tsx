@@ -30,7 +30,7 @@ const Card: React.FC<Props> = ({song, data, i, className}) => {
       <div className={`overflow-hidden aspect-video bg-cardgray h-[310px] w-full ${(isPlaying && activeSong?.title === song?.title) && "bg-hovergray"} hover:bg-hovergray animate-slideup cursor-pointer rounded-xl relative group`}>
         <div className={`rounded-xl z-30 ${(isPlaying && activeSong?.title === song?.title) ? "" : "opacity-0 group-hover:opacity-100"} transition duration-300 ease-in-out cursor-pointer absolute to-transparent bg-gradient-to-t inset-x-0 -bottom-2 text-white flex items-end`}>
             <div className='w-full'>
-              <div className="flex justify-end w-full space-y-3 text-xl group-hover:translate-y-0 translate-y-4 pb-10 transform transition duration-300 ease-in-out">    
+              <div className="flex justify-end w-full space-y-3 text-xl group-hover:translate-y-0 translate-y-4 pb-10 transform bg-transparent transition duration-300 ease-in-out">    
               {/* playpause */}
               <div className='w-full flex justify-end'>
                 <button onClick={togglePlayPause} type="button" className='bg-primarygreen flex justify-center w-14 h-14 -mt-32 mr-6 rounded-full items-center'>

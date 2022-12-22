@@ -4,7 +4,7 @@ import Sidebar from "../components/Sidebar";
 
 type Props = {
     Component?: any,
-    otherProps?: any
+    otherProps?: any 
 }
 
 const InternalLayout:React.FC<Props> = ({ Component, ...otherProps }) => {
