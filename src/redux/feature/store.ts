@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import audioReducer from './audio/audioSlice';
 import { shazamCoreApi } from '../services/ShazamCore';
+import colorScheme from './composition/colorScheme';
 
 
 export const store = configureStore({
   reducer: {
     [shazamCoreApi.reducerPath]: shazamCoreApi.reducer,
     audio: audioReducer,
+    color: colorScheme
   },
    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(shazamCoreApi.middleware)
 })

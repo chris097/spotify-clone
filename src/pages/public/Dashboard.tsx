@@ -1,56 +1,66 @@
 import Card from '../../components/Cards';
 import Footer from '../../components/Footer';
 import {  useGetTopChartsQuery } from '../../redux/services/ShazamCore';
-// import { artists, dailys, recents } from '../../data'
 import AudioPlayer from '../../components/Audio';
 import { useDispatch, useSelector } from 'react-redux';
 import { playPause } from '../../redux/feature/audio/audioSlice';
 import PlayPause from '../../components/Audio/PlayPause';
-import { useState } from 'react';
-// import TopCard from '../../components/Cards/TopCard';
+import { setActiveColor } from '../../redux/feature/composition/colorScheme';
 
 const Dashboard = () => {
 
+  // states
   const { isPlaying, activeSong } = useSelector((state: any) => state.audio);
-  console.log(activeSong?.title)
-
+  const { activeColor } = useSelector((state:any) => state.color)
+  // dispatcher 
   const dispatch = useDispatch()
-
+  // query
   const { data, isFetching } = useGetTopChartsQuery([]);
-  
+  // function
   const togglePlayPause = () => {
     const prevValue = isPlaying;
     if (prevValue) {
       dispatch(playPause(true))
     }
+  };
+  const handleMouseEnter = () => {
+    dispatch(setActiveColor('bg-gradient-to-b from-[#82091159]'))
+  };
+  const handleMouseLeave = () => {
+    dispatch(setActiveColor('bg-gradient-to-b from-[#242424be]'))
+  };
+
+  const colorScheme = () => {
+    if (activeColor === 'bg-gradient-to-b from-[#82091159]') {
+    return 'bg-[#eacece33]'
+  } else {
+    return 'bg-[#303030f0]'
+    }
   }
+
+  // activeColor === '' ? 'bg-[#303030f0]' : 'bg-[#eacece33]'
  
   return (
-    <div className='mt-20 font-sourcesan'>
-      <div className='bg-gradient-to-b from-[#8209114a] w-full md:pl-64 md:pr-10 pd:mx-0 h-60'>
+  <>
+   { isFetching ? <div className='pl-64 z-50 relative'>Loading...</div> :  <div className='mt-20 font-sourcesan'>
+      <div className={` ${activeColor  === '' ? 'bg-gradient-to-b from-[#242424be] transition ease-in-out duration-700 transform' : activeColor} w-full md:pl-64 md:pr-10 pd:mx-0 h-60`}>
         <div className='pt-2'>
           <div className='text-white text-2xl font-semibold'>Good Morning</div>
-          <div className='flex gap-4 mt-4'>
+          <div className='flex gap-4 mt-4' >
             {data?.slice(0, 3).map((song:any) => (
-              <div className='border border-[#392e2e] flex cursor-pointer justify-between items-center rounded shadow pr-3 h-[75px] bg-[#392e2e] hover:bg-[#3e3838] w-full'>
-            <div className='flex gap-3'>
+              <div
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                className={`overflow-hidden animate-slideup relative group flex cursor-pointer justify-between items-center rounded shadow pr-3 h-[80px] ${colorScheme()} bg-[#303030f0] w-full`}>
+            <div className='flex gap-3 transition animate-300 ease-in-out absolute to-transparent inset-x-0 group'>
                   <img
                     src={song?.images?.coverart}
-                    className='bg-white w-18 rounded-tl rounded-bl h-[75px]'
+                    className='bg-white w-18 rounded-tl rounded-bl h-[80px]'
+                    alt='audio image'
                   />
-                  <div className='flex items-center h-[75px]'>{song?.title}</div>
+                  <div className='flex items-center h-[80px] whitespace-nowrap text-white font-semibold'>{song?.title}</div>
               </div>
-              <div className='w-full flex justify-end'>
-                {/* <button onClick={togglePlayPause} type="button" className='bg-primarygreen flex justify-center w-12 h-12 mr-1 rounded-full items-center'>
-                  {isPlaying && activeSong?.title === song?.title ?
-                    (
-                      <svg height="24" width="24" viewBox="0 0 24 24"><path d="M5.7 3a.7.7 0 00-.7.7v16.6a.7.7 0 00.7.7h2.6a.7.7 0 00.7-.7V3.7a.7.7 0 00-.7-.7H5.7zm10 0a.7.7 0 00-.7.7v16.6a.7.7 0 00.7.7h2.6a.7.7 0 00.7-.7V3.7a.7.7 0 00-.7-.7h-2.6z"></path></svg>
-                    ) :
-                    (
-                      <svg role="img" height="24" width="24" viewBox="0 0 24 24"><path d="M7.05 3.606l13.49 7.788a.7.7 0 010 1.212L7.05 20.394A.7.7 0 016 19.788V4.212a.7.7 0 011.05-.606z"></path></svg>
-                    )
-                  }
-                </button> */}
+              <div className='w-full flex justify-end transform transition duration-300 to-transparent ease-in-out group-hover:translate-y-0 translate-y-16'>
                   <PlayPause
                     togglePlayPause={togglePlayPause}
                     isPlaying={isPlaying}
@@ -63,15 +73,15 @@ const Dashboard = () => {
           </div>
           <div className='flex gap-4 mt-5'>
             {data?.slice(3, 6).map((song:any) => (
-              <div className='border border-[#392e2e] cursor-pointer flex justify-between items-center rounded shadow pr-3 h-[75px] bg-[#392e2e] w-full'>
+              <div className='overflow-hidden animate-slideup relative group flex cursor-pointer justify-between items-center rounded shadow pr-3 h-[80px] bg-[#303030f0] w-full'>
             <div className='flex gap-3'>
                   {song?.images?.coverart ? <img
                     src={song?.images?.coverart}
-                    className='bg-white w-18 rounded-tl rounded-bl h-[75px]'
-                  /> : <div className='w-18 h-[75px] items-center flex'>Add img</div>}
-                  <div className='flex items-center h-[75px]'>{song?.title}</div>
+                    className='bg-white w-18 rounded-tl rounded-bl h-[80px]'
+                  /> : <div className='w-18 h-[80px] whitespace-nowrap items-center flex'>Add img</div>}
+                  <div className='flex items-center h-[80px] whitespace-nowrap text-white font-semibold'>{song?.title}</div>
               </div>
-                <div>
+                <div className='w-full flex justify-end transform transition duration-300 to-transparent ease-in-out group-hover:translate-y-0 translate-y-16'> 
                   <PlayPause
                     togglePlayPause={togglePlayPause}
                     isPlaying={isPlaying}
@@ -85,7 +95,6 @@ const Dashboard = () => {
         </div>
       </div>
    {
-    isFetching ? <div>Loading...</div> :
           <>
     <div className='w-full h-full font-medium text-sm font-sourcesan md:pl-64 mt-4 md:pr-10 pd:mx-0'>
       <div className='flex justify-between items-center'>
@@ -112,8 +121,9 @@ const Dashboard = () => {
                       i={1}
                     />
           </>}
-      </div>
-  )
+      </div>}
+      </>
+      )
 }
 
 export default Dashboard
