@@ -73,7 +73,10 @@ const Dashboard = () => {
           </div>
           <div className='flex gap-4 mt-5'>
             {data?.slice(3, 6).map((song:any) => (
-              <div className='overflow-hidden animate-slideup relative group flex cursor-pointer justify-between items-center rounded shadow pr-3 h-[80px] bg-[#303030f0] w-full'>
+              <div
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                className='overflow-hidden animate-slideup relative group flex cursor-pointer justify-between items-center rounded shadow pr-3 h-[80px] bg-[#303030f0] w-full'>
             <div className='flex gap-3'>
                   {song?.images?.coverart ? <img
                     src={song?.images?.coverart}
