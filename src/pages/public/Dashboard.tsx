@@ -51,7 +51,8 @@ const Dashboard = () => {
               <div
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className={`overflow-hidden animate-slideup relative group flex cursor-pointer justify-between items-center rounded shadow pr-3 h-[80px] ${colorScheme()} bg-[#303030f0] w-full`}>
+                className={`overflow-hidden animate-slideup relative group flex cursor-pointer justify-between items-center rounded shadow pr-3 h-[80px] 
+                ${activeColor === 'bg-gradient-to-b from-[#82091159]' ? 'bg-[#eacece33]' : 'bg-[#303030f0]'} w-full`}>
             <div className='flex gap-3 transition animate-300 ease-in-out absolute to-transparent inset-x-0 group'>
                   <img
                     src={song?.images?.coverart}
