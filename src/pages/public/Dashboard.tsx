@@ -30,13 +30,13 @@ const Dashboard = () => {
     dispatch(setActiveColor('bg-gradient-to-b from-[#242424be]'))
   };
 
-  const colorScheme = () => {
-    if (activeColor === 'bg-gradient-to-b from-[#82091159]') {
-    return 'bg-[#eacece33]'
-  } else {
-    return 'bg-[#303030f0]'
-    }
-  }
+  // const colorScheme = () => {
+  //   if (activeColor === 'bg-gradient-to-b from-[#82091159]') {
+  //   return 'bg-[#eacece33]'
+  // } else {
+  //   return 'bg-[#303030f0]'
+  //   }
+  // }
 
   // activeColor === '' ? 'bg-[#303030f0]' : 'bg-[#eacece33]'
  
@@ -46,8 +46,8 @@ const Dashboard = () => {
       <div className={` ${activeColor  === '' ? 'bg-gradient-to-b from-[#242424be] transition ease-in-out duration-700 transform' : activeColor} w-full md:pl-64 md:pr-10 pd:mx-0 h-60`}>
         <div className='pt-2'>
           <div className='text-white text-2xl font-semibold'>Good Morning</div>
-          <div className='flex gap-4 mt-4' >
-            {data?.slice(0, 3).map((song:any) => (
+          <div className='grid grid-cols-3 gap-4 mt-4' >
+            {data?.slice(0, 6).map((song:any) => (
               <div
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
@@ -72,7 +72,7 @@ const Dashboard = () => {
           </div>
             ))}
           </div>
-          <div className='flex gap-4 mt-5'>
+          {/* <div className='flex gap-4 mt-5'>
             {data?.slice(3, 6).map((song:any) => (
               <div
                 onMouseEnter={handleMouseEnter}
@@ -95,7 +95,7 @@ const Dashboard = () => {
               </div>
           </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
    {
