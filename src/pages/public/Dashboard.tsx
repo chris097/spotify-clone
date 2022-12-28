@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { playPause } from '../../redux/feature/audio/audioSlice';
 import PlayPause from '../../components/Audio/PlayPause';
 import { setActiveColor } from '../../redux/feature/composition/colorScheme';
+import { colorQuery } from '../../components/colors';
 
 const Dashboard = () => {
 
@@ -52,7 +53,7 @@ const Dashboard = () => {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 className={`overflow-hidden animate-slideup relative group flex cursor-pointer justify-between items-center rounded shadow pr-3 h-[80px] 
-                ${activeColor === 'bg-gradient-to-b from-[#82091159]' ? 'bg-[#eacece33]' : 'bg-[#303030f0]'} w-full`}>
+                ${colorQuery(activeColor)} w-full`}>
             <div className='flex gap-3 transition animate-300 ease-in-out absolute to-transparent inset-x-0 group'>
                   <img
                     src={song?.images?.coverart}
