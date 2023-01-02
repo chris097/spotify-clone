@@ -18,7 +18,7 @@ export const colorQuery = (
     focusColor: string,
     intialColor: string
     ) => {
-    if (activeColor === COLOR.RED_GRADIENT || activeColor === '') {
+    if (activeColor === COLOR.RED_GRADIENT) {
         return focusColor
     } else {
         return intialColor
