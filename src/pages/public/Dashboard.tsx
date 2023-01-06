@@ -17,7 +17,7 @@ const Dashboard = () => {
   const dispatch = useDispatch()
   // query
   const { data, isFetching } = useGetTopChartsQuery([]);
-  // function
+  // functions
   const togglePlayPause = () => {
     const prevValue = isPlaying;
     if (prevValue) {
