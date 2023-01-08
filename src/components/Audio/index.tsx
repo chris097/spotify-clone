@@ -18,7 +18,7 @@ type Audio = {
 }
 
 const AudioPlayer:React.FC<Audio> = ({song, data, i}) => {
-  // state
+  // states
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [seekTime, setSeekTime] = useState(0);
